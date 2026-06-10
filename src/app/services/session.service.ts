@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { fromEvent, merge } from 'rxjs';
 import { debounceTime, throttleTime } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { environment } from '../environments/environment';
+import { environment } from '../../environments/environment.prod';
 
 @Injectable({ providedIn: 'root' })
 export class SessionService {
