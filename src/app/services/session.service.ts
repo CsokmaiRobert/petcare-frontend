@@ -3,13 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { fromEvent, merge } from 'rxjs';
 import { debounceTime, throttleTime } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { environment } from '../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class SessionService {
     private readonly http = inject(HttpClient);
     private readonly ngZone = inject(NgZone);
     private readonly router = inject(Router);
-    private readonly sessionUrl = 'https://10.169.140.178:3000/api/session';
+    private readonly sessionUrl = `${environment.apiUrl}/session`;
 
     private lastActivityTime = Date.now();
     private activityCheckInterval: any;

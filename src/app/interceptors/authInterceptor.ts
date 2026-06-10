@@ -3,6 +3,7 @@ import { inject } from '@angular/core';
 import { catchError, switchMap, throwError, BehaviorSubject } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 let isRefreshing = false;
 let refreshTokenSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
@@ -44,7 +45,7 @@ function handle401Error(request: HttpRequest<unknown>, next: HttpHandlerFn, auth
         const token = localStorage.getItem('auth_token');
         if (token) {
             const http = inject(HttpClient);
-            return http.post<{ token: string }>('https://10.169.140.178:3000/api/session/refresh', {}, {
+            return http.post<{ token: string }>(`${environment.apiUrl}/session/refresh`, {}, {
                 headers: { Authorization: `Bearer ${token}` }
             }).pipe(
                 switchMap((response) => {

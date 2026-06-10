@@ -3,13 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs';
 import { SessionService } from './session.service';
+import { environment } from '../../../environment.prod';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
     private readonly http = inject(HttpClient);
     private readonly router = inject(Router);
     private readonly sessionService = inject(SessionService);
-    private readonly url = 'https://10.169.140.178:3000/api/auth';
+    private readonly url = `${environment.apiUrl}/auth`;
 
     private isLoggedInSignal = signal<boolean>(!!localStorage.getItem('auth_token'));
 

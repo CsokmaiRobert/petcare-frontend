@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Pet } from '../models/pet.model';
+import { environment } from '../environments/environment';
 
 export interface PetPage {
   data: Pet[];
@@ -11,7 +12,7 @@ export interface PetPage {
   totalPages: number;
 }
 
-const API_URL = 'https://10.169.140.178:3000/api/pets';
+const API_URL = `${environment.apiUrl}/pets`;
 
 @Injectable({ providedIn: 'root' })
 export class PetService {
