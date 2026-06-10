@@ -1,0 +1,138 @@
+<div class="page">
+  <div class="page__header">
+    <div>
+      <h1 class="page__title">Patient Records</h1>
+      <p class="page__sub">
+        Manage all patient information and medical records
+      </p>
+    </div>
+    <button class="btn btn--primary" (click)="addNew()">+ Add New Pet</button>
+  </div>
+
+  <div class="stats">
+    <div class="stat-card">
+      <span class="stat-card__label">Total Patients</span>
+      <span class="stat-card__value">{{ total() }}</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-card__label">Active Patients</span>
+      <span class="stat-card__value">{{ activeCount() }}</span>
+    </div>
+  </div>
+
+  <div class="search-bar">
+    <input
+      class="search-bar__input"
+      type="text"
+      placeholder="Search by name, owner, species, or breed..."
+      [value]="searchQuery()"
+      (input)="onSearch($any($event.target).value)"
+    />
+  </div>
+
+  <div class="table-wrap">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Pet Name</th>
+          <th>Species</th>
+          <th>Breed</th>
+          <th>Age</th>
+          <th>Owner</th>
+          <th>Last Visit</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (pet of pagedPets(); track pet.id) {
+          <tr>
+            <td>{{ pet.name }}</td>
+            <td>{{ pet.species }}</td>
+            <td>{{ pet.breed }}</td>
+            <td>{{ pet.age }} years</td>
+            <td>{{ pet.ownerName }}</td>
+            <td>{{ formatDate(pet.lastVisit) }}</td>
+            <td>
+              <span
+                class="badge"
+                [class.badge--active]="pet.status === 'Active'"
+              >
+                {{ pet.status }}
+              </span>
+            </td>
+            <td class="actions">
+              <button class="icon-btn" title="View" (click)="viewPet(pet.id)">
+                👁
+              </button>
+              <button
+                class="icon-btn icon-btn--edit"
+                title="Edit"
+                (click)="editPet(pet.id)"
+              >
+                ✏️
+              </button>
+              <button
+                class="icon-btn icon-btn--delete"
+                title="Delete"
+                (click)="requestDelete(pet)"
+              >
+                🗑
+              </button>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="8" class="table__empty">No patients found.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  @if (totalPages() > 1) {
+    <div class="pagination">
+      <button
+        class="pagination__btn"
+        [disabled]="currentPage() === 1"
+        (click)="goToPage(currentPage() - 1)"
+      >
+        ‹
+      </button>
+      @for (p of pageNumbers(); track p) {
+        <button
+          class="pagination__btn"
+          [class.pagination__btn--active]="p === currentPage()"
+          (click)="goToPage(p)"
+        >
+          {{ p }}
+        </button>
+      }
+      <button
+        class="pagination__btn"
+        [disabled]="currentPage() === totalPages()"
+        (click)="goToPage(currentPage() + 1)"
+      >
+        ›
+      </button>
+    </div>
+  }
+</div>
+
+@if (petToDelete()) {
+  <div class="modal-backdrop">
+    <div class="modal">
+      <h3 class="modal__title">Are you sure?</h3>
+      <p class="modal__body">
+        This action cannot be undone. This will permanently delete the pet
+        record and all associated medical information.
+      </p>
+      <div class="modal__actions">
+        <button class="btn btn--ghost" (click)="cancelDelete()">Cancel</button>
+        <button class="btn btn--danger" (click)="confirmDelete()">
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+}

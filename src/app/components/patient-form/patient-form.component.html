@@ -1,0 +1,135 @@
+<div class="page">
+  <button class="back-btn" (click)="cancel()">← {{ isEdit() ? 'Back to Pet Details' : 'Back to Patients' }}</button>
+
+  <h1 class="page__title">{{ pageTitle() }}</h1>
+  <p class="page__sub">{{ pageSubtitle() }}</p>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+    <fieldset class="form-section">
+      <legend class="form-section__title">Pet Information</legend>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="name">Pet Name *</label>
+          <input id="name" type="text" formControlName="name" placeholder="e.g. Max"
+            [class.is-invalid]="f['name'].invalid && f['name'].touched" />
+          @if (f['name'].invalid && f['name'].touched) {
+            <span class="error-msg">
+              @if (f['name'].errors?.['required']) { Name is required. }
+              @else if (f['name'].errors?.['minlength']) { Name is too short. }
+              @else if (f['name'].errors?.['maxlength']) { Name is too long. }
+            </span>
+          }
+        </div>
+        <div class="form-group">
+          <label for="species">Species *</label>
+          <select id="species" formControlName="species">
+            @for (s of species; track s) {
+              <option [value]="s">{{ s }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="breed">Breed *</label>
+          <input id="breed" type="text" formControlName="breed" placeholder="e.g. Golden Retriever"
+            [class.is-invalid]="f['breed'].invalid && f['breed'].touched" />
+          @if (f['breed'].invalid && f['breed'].touched) {
+            <span class="error-msg">Breed is required.</span>
+          }
+        </div>
+        <div class="form-group">
+          <label for="age">Age (years) *</label>
+          <input id="age" type="number" formControlName="age" placeholder="e.g. 3"
+            [class.is-invalid]="f['age'].invalid && f['age'].touched" />
+          @if (f['age'].invalid && f['age'].touched) {
+            <span class="error-msg">Please enter a valid age (> 0).</span>
+          }
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="weight">Weight (kg) *</label>
+          <input id="weight" type="number" step="0.1" formControlName="weight" placeholder="e.g. 25.5"
+            [class.is-invalid]="f['weight'].invalid && f['weight'].touched" />
+          @if (f['weight'].invalid && f['weight'].touched) {
+            <span class="error-msg">Please enter a valid weight (> 0).</span>
+          }
+        </div>
+        <div class="form-group">
+          <label for="status">Status *</label>
+          <select id="status" formControlName="status">
+            @for (s of statuses; track s) {
+              <option [value]="s">{{ s }}</option>
+            }
+          </select>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset class="form-section">
+      <legend class="form-section__title">Owner Information</legend>
+      <div class="form-group">
+        <label for="ownerName">Owner Name *</label>
+        <input id="ownerName" type="text" formControlName="ownerName" placeholder="e.g. John Smith"
+          [class.is-invalid]="f['ownerName'].invalid && f['ownerName'].touched" />
+        @if (f['ownerName'].invalid && f['ownerName'].touched) {
+          <span class="error-msg">Owner name is required (at least 2 characters).</span>
+        }
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="ownerEmail">Email *</label>
+          <input id="ownerEmail" type="email" formControlName="ownerEmail" placeholder="owner@example.com"
+            [class.is-invalid]="f['ownerEmail'].invalid && f['ownerEmail'].touched" />
+          @if (f['ownerEmail'].invalid && f['ownerEmail'].touched) {
+            <span class="error-msg">A valid email is required.</span>
+          }
+        </div>
+        <div class="form-group">
+          <label for="ownerPhone">Phone *</label>
+          <input id="ownerPhone" type="tel" formControlName="ownerPhone" placeholder="07XX-XXX-XXX"
+            [class.is-invalid]="f['ownerPhone'].invalid && f['ownerPhone'].touched" />
+          @if (f['ownerPhone'].invalid && f['ownerPhone'].touched) {
+            <span class="error-msg">Format: 07XX-XXX-XXX</span>
+          }
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset class="form-section">
+      <legend class="form-section__title">Medical Information</legend>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="lastVisit">Last Visit Date *</label>
+          <input id="lastVisit" type="date" formControlName="lastVisit"
+            [class.is-invalid]="f['lastVisit'].invalid && f['lastVisit'].touched" />
+          @if (f['lastVisit'].invalid && f['lastVisit'].touched) {
+            <span class="error-msg">Last visit date is required.</span>
+          }
+        </div>
+        <div class="form-group">
+          <label for="nextAppointment">Next Appointment</label>
+          <input id="nextAppointment" type="date" formControlName="nextAppointment" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="medicalNotes">Medical Notes</label>
+        <textarea id="medicalNotes" formControlName="medicalNotes" rows="3"
+          placeholder="Enter any medical conditions, allergies, or special care instructions..."></textarea>
+      </div>
+      <div class="form-group">
+        <label for="vaccinations">Vaccinations</label>
+        <textarea id="vaccinations" formControlName="vaccinations" rows="2"
+          placeholder="List all vaccinations and their dates..."></textarea>
+      </div>
+    </fieldset>
+
+    <div class="form-actions">
+      <button type="button" class="btn btn--ghost" (click)="cancel()">Cancel</button>
+      <button type="submit" class="btn btn--primary">{{ isEdit() ? 'Save Changes' : 'Add Pet' }}</button>
+    </div>
+  </form>
+</div>

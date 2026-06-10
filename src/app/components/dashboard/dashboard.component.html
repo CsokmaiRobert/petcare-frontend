@@ -1,0 +1,28 @@
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar__brand">
+      <span class="sidebar__logo">🐾</span>
+      <div>
+        <span class="sidebar__title">PawCare</span>
+        <span class="sidebar__sub">Dashboard</span>
+      </div>
+    </div>
+    <nav class="sidebar__nav">
+      <a class="sidebar__link" routerLink="/dashboard" routerLinkActive="sidebar__link--active"
+        [routerLinkActiveOptions]="{exact:true}">
+        <span>📊</span> Dashboard
+      </a>
+      <a class="sidebar__link" routerLink="/dashboard/patients" routerLinkActive="sidebar__link--active">
+        <span>🐾</span> Patients
+      </a>
+
+      <button (click)="onLogout()" class="logout-btn">
+        <span>🚪</span> Sign Out
+      </button>
+    </nav>
+  </aside>
+
+  <div class="main">
+    <router-outlet />
+  </div>
+</div>

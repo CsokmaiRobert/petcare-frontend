@@ -1,0 +1,108 @@
+<header class="nav">
+  <div class="nav__brand">
+    <span class="nav__logo">🐾</span>
+    <div>
+      <span class="nav__title">PawCare</span>
+      <span class="nav__subtitle">Veterinary System</span>
+    </div>
+  </div>
+  <div class="nav__actions">
+    <button class="btn btn--primary" (click)="openAuthModal()">Sign In</button>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero__content">
+      <span class="hero__badge">🐾 Professional Veterinary Management</span>
+      <h1 class="hero__title">Caring for Pets,<br>Supporting Veterinarians</h1>
+      <p class="hero__desc">
+        A comprehensive veterinary practice management system designed to streamline patient records,
+        appointments, and medical care. Simplify your workflow and focus on what matters most –
+        providing exceptional care for animals.
+      </p>
+      <div class="hero__cta">
+        <button class="btn btn--primary btn--lg" (click)="goToDashboard()">Open Dashboard</button>
+      </div>
+    </div>
+    <div class="hero__image">
+      <img src="milo.jpg" alt="Veterinarian examining a cat" />
+    </div>
+  </section>
+
+  <section class="features">
+    <h2 class="features__heading">Everything You Need to Manage Your Practice</h2>
+    <p class="features__sub">Powerful features designed specifically for veterinary professionals</p>
+    <div class="features__grid">
+      <div class="feature-card">
+        <div class="feature-card__icon">📋</div>
+        <h3>Patient Records</h3>
+        <p>Complete digital records for every pet with medical history, vaccinations, and treatment plans.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card__icon">📅</div>
+        <h3>Appointment Scheduling</h3>
+        <p>Efficiently manage appointments and reduce no-shows with automated reminders.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card__icon">❤️</div>
+        <h3>Health Tracking</h3>
+        <p>Monitor vital signs, medications, and treatment progress over time.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card__icon">🔒</div>
+        <h3>Secure &amp; Compliant</h3>
+        <p>HIPAA-compliant data storage with enterprise-grade security measures.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <h2>Ready to Transform Your Practice?</h2>
+    <p>Join hundreds of veterinary clinics using PawCare to provide better care.</p>
+    <button class="btn btn--white btn--lg" (click)="goToDashboard()">Get Started Today</button>
+  </section>
+</main>
+
+<footer class="footer">
+  <span class="footer__brand">🐾 PawCare Veterinary System</span>
+  <p>© 2026 PawCare. All rights reserved. Caring for Pets, Supporting Veterinarians.</p>
+</footer>
+
+@if (showModal) {
+<div class="modal-overlay" (click)="closeAuthModal()">
+  <div class="modal-card" (click)="$event.stopPropagation()">
+    <button class="modal-close" (click)="closeAuthModal()">&times;</button>
+
+    <h2>🐾 PawCare Portal</h2>
+    <p class="modal-subtitle">{{ isLoginMode ? 'Sign in to access secure records' : 'Register a new staff profile' }}
+    </p>
+
+    @if (authMessage) {
+    <div class="banner" [class.error]="isError">{{ authMessage }}</div>
+    }
+
+    <form (ngSubmit)="handleAuthSubmit()">
+      <div class="form-group">
+        <label>Username</label>
+        <input type="text" [(ngModel)]="username" name="username" required placeholder="Enter username">
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" [(ngModel)]="password" name="password" required placeholder="Enter password">
+      </div>
+
+      <button type="submit" class="btn btn--primary btn--block">
+        {{ isLoginMode ? 'Sign In' : 'Create Staff Account' }}
+      </button>
+    </form>
+
+    <div class="toggle-mode">
+      <button (click)="toggleMode()" class="btn-link">
+        {{ isLoginMode ? "Need an account? Register profile" : 'Already have an account? Login' }}
+      </button>
+    </div>
+  </div>
+</div>
+}

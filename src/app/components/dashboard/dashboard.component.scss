@@ -1,0 +1,96 @@
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 200px;
+  background: #fff;
+  border-right: 1px solid #e2e8f0;
+  padding: 1.25rem 0;
+  flex-shrink: 0;
+
+  &__brand {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0 1.25rem 1.25rem;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  &__logo {
+    font-size: 1.5rem;
+    color: #0d9488;
+  }
+
+  &__title {
+    display: block;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #0f172a;
+  }
+
+  &__sub {
+    display: block;
+    font-size: 0.7rem;
+    color: #0d9488;
+    font-weight: 500;
+  }
+
+  &__nav {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.25rem;
+    font-size: 0.875rem;
+    color: #475569;
+    text-decoration: none;
+    font-weight: 500;
+    border-radius: 0;
+    transition: background 0.15s;
+
+    &:hover {
+      background: #f8fafc;
+      color: #0d9488;
+    }
+
+    &--active {
+      background: #f0fdf9;
+      color: #0d9488;
+      font-weight: 600;
+    }
+  }
+}
+
+.main {
+  flex: 1;
+  background: #f8fafc;
+  overflow-y: auto;
+}
+
+.logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  font-size: 0.875rem;
+  color: #ef4444;
+  background: transparent;
+  border: none;
+  width: 100%;
+  text-align: left;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 2rem;
+
+  &:hover {
+    background: #fef2f2;
+    border-radius: 6px;
+  }
+}

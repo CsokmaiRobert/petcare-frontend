@@ -1,0 +1,92 @@
+@if (pet(); as p) {
+  <div class="page">
+    <div class="detail-top">
+      <button class="back-btn" (click)="goBack()">← Back to Patients</button>
+      <div class="detail-top__actions">
+        <button class="btn btn--outline" (click)="editPet()">✏️ Edit</button>
+        <button class="btn btn--danger" (click)="requestDelete()">🗑 Delete</button>
+      </div>
+    </div>
+
+    <div class="detail-layout">
+      <div class="detail-main">
+        <div class="detail-header">
+          <div>
+            <h1 class="detail-header__name">{{ p.name }}</h1>
+            <p class="detail-header__breed">{{ p.breed }} • {{ p.species }}</p>
+          </div>
+          <span class="badge" [class.badge--active]="p.status === 'Active'">{{ p.status }}</span>
+        </div>
+
+        <div class="info-row">
+          <div class="info-item">
+            <span class="info-item__label">Age</span>
+            <span class="info-item__value">{{ p.age }} years old</span>
+          </div>
+          <div class="info-item">
+            <span class="info-item__label">Weight</span>
+            <span class="info-item__value">{{ p.weight }} kg</span>
+          </div>
+        </div>
+
+        <div class="detail-section">
+          <h4>🩺 Medical Notes</h4>
+          <p>{{ p.medicalNotes || '—' }}</p>
+        </div>
+
+        <div class="detail-section">
+          <h4>💉 Vaccinations</h4>
+          <p>{{ p.vaccinations || '—' }}</p>
+        </div>
+      </div>
+
+      <div class="detail-sidebar">
+        <div class="info-card">
+          <h4>Owner Information</h4>
+          <p class="owner-name">{{ p.ownerName }}</p>
+          <p>✉ {{ p.ownerEmail }}</p>
+          <p>📞 {{ p.ownerPhone }}</p>
+        </div>
+
+        <div class="info-card">
+          <h4>📅 Appointments</h4>
+          <div class="appt-row">
+            <span>Last Visit</span>
+            <strong>{{ formatDate(p.lastVisit) }}</strong>
+          </div>
+          <div class="appt-row">
+            <span>Next Appointment</span>
+            <strong>{{ p.nextAppointment ? formatDate(p.nextAppointment) : '—' }}</strong>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h4>📄 Record Information</h4>
+          <div class="appt-row">
+            <span>Created</span>
+            <strong>{{ formatDate(p.createdAt) }}</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  @if (showDeleteConfirm()) {
+    <div class="modal-backdrop">
+      <div class="modal">
+        <h3 class="modal__title">Are you sure?</h3>
+        <p class="modal__body">
+          This action cannot be undone. This will permanently delete {{ p.name }}'s record and all associated medical information.
+        </p>
+        <div class="modal__actions">
+          <button class="btn btn--ghost" (click)="cancelDelete()">Cancel</button>
+          <button class="btn btn--danger" (click)="confirmDelete()">Delete</button>
+        </div>
+      </div>
+    </div>
+  }
+} @else {
+  <div class="page">
+    <p>Patient not found. <button class="back-btn" (click)="goBack()">← Back to Patients</button></p>
+  </div>
+}
